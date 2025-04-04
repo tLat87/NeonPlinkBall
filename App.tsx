@@ -1,131 +1,66 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
-
 import React from 'react';
-import type {PropsWithChildren} from 'react';
-import {
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import {Image, Text, TouchableOpacity, View} from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import {Provider} from "react-redux";
+import {PersistGate} from "redux-persist/integration/react";
+import {persistor, store} from "./src/redux/store";
+import MainScreen from "./src/screens/MainScreen";
+import HomeScreen from "./src/screens/HomeScreen";
+import ChooseLevelScreen from "./src/screens/ChooseLevelScreen";
+import ShopScreen from "./src/screens/ShopScreen";
+import AboutScreen from "./src/screens/AboutScreen";
+import SettingsScreen from "./src/screens/SettingsScreen";
+import GameDesc from "./src/screens/GameDesc";
+import GameProccesScreen from "./src/screens/GameProccesScreen";
+import WinScreen from "./src/screens/WinScreen";
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+const Stack = createStackNavigator();
 
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
+const leftCu = () => {
+    const navigation = useNavigation();
+    return (
+        <TouchableOpacity onPress={() => {navigation.goBack()}} style={{marginLeft: 16, transform: [{scaleX: -1}]}}>
 
-function Section({children, title}: SectionProps): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
+        </TouchableOpacity>
+        )
+    }
+
+export default function App() {
+
+    return (
+        <Provider store={store}>
+            <PersistGate loading={null} persistor={persistor}>
+                <NavigationContainer>
+                    {/*<BackgroundMusic />*/}
+                    <Stack.Navigator screenOptions={{
+                        headerStyle: { backgroundColor: '#000000', },
+                        headerLeft: leftCu,
+                        headerTitle: () => (
+                            <View style={{flexDirection: 'row', alignItems: 'center', alignSelf: 'flex-end', width: '100%'}}>
+                            {/*<Text>*/}
+                            {/*    Wonders of Holland*/}
+                            {/*</Text>*/}
+                            </View>
+                        ),
+                        headerShadowVisible: false,
+                    }}>
+
+                        {/*<Stack.Screen name="Splash" component={SplashScreen} options={{ headerShown: false }} />*/}
+                        {/*<Stack.Screen name="Welcome" component={WelcomeScreen} options={{ headerShown: false }} />*/}
+                        <Stack.Screen name="Main" component={MainScreen} options={{ headerShown: false }} />
+                        <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
+                        <Stack.Screen name="ChooseLevel" component={ChooseLevelScreen} options={{ headerShown: false }} />
+                        <Stack.Screen name="Shop" component={ShopScreen} options={{ headerShown: false }} />
+                        <Stack.Screen name="About" component={AboutScreen} options={{ headerShown: false }} />
+                        <Stack.Screen name="Settings" component={SettingsScreen} options={{ headerShown: false }} />
+                        <Stack.Screen name="GameDesc" component={GameDesc} options={{ headerShown: false }} />
+                        <Stack.Screen name="GameProccesScreen" component={GameProccesScreen} options={{ headerShown: false }} />
+                        <Stack.Screen name="WinScreen" component={WinScreen} options={{ headerShown: false }} />
+                    </Stack.Navigator>
+                </NavigationContainer>
+          </PersistGate>
+         </Provider>
+    );
 }
-
-function App(): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
-
-  /*
-   * To keep the template simple and small we're adding padding to prevent view
-   * from rendering under the System UI.
-   * For bigger apps the reccomendation is to use `react-native-safe-area-context`:
-   * https://github.com/AppAndFlow/react-native-safe-area-context
-   *
-   * You can read more about it here:
-   * https://github.com/react-native-community/discussions-and-proposals/discussions/827
-   */
-  const safePadding = '5%';
-
-  return (
-    <View style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        style={backgroundStyle}>
-        <View style={{paddingRight: safePadding}}>
-          <Header/>
-        </View>
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-            paddingHorizontal: safePadding,
-            paddingBottom: safePadding,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </View>
-  );
-}
-
-const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-});
-
-export default App;
