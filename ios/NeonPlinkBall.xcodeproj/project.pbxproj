@@ -277,7 +277,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.neonPlinkBall;
+				PRODUCT_BUNDLE_IDENTIFIER = com.neonplinkball.fir;
 				PRODUCT_NAME = NeonPlinkBall;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -304,7 +304,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.neonPlinkBall;
+				PRODUCT_BUNDLE_IDENTIFIER = com.neonplinkball.fir;
 				PRODUCT_NAME = NeonPlinkBall;
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
